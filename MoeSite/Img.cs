@@ -18,6 +18,11 @@ namespace MoeLoader
     public class Img
     {
         /// <summary>
+        /// 中间暂存处理
+        /// </summary>
+        public string MidUrl { get; set; }
+
+        /// <summary>
         /// 原图地址
         /// </summary>
         public string OriginalUrl { get; set; }

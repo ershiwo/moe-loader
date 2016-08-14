@@ -253,8 +253,9 @@ namespace SitePack
                 //http://i2.pixiv.net/c/600x600/img-master/img/2014/10/08/06/13/30/46422743_p0_master1200.jpg
                 //http://i2.pixiv.net/img-original/img/2014/10/08/06/13/30/46422743_p0.png
                 i.SampleUrl = doc.DocumentNode.SelectSingleNode("//div[@class='works_display']").SelectSingleNode(".//img").Attributes["src"].Value;
-                i.OriginalUrl = doc.DocumentNode.SelectSingleNode("//div[@class='_illust_modal _hidden ui-modal-close-box']").SelectSingleNode(".//img").Attributes["data-src"].Value;
-                //i.OriginalUrl = i.SampleUrl.Replace("p0_master1200", "p0");
+                i.MidUrl = i.SampleUrl.Replace("c/600x600/img-master", "img-original");
+                //i.OriginalUrl = doc.DocumentNode.SelectSingleNode("//div[@class='_illust_modal _hidden ui-modal-close-box']").SelectSingleNode(".//img").Attributes["data-src"].Value;
+                i.OriginalUrl = i.MidUrl.Replace("p0_master1200", "p0");
                 i.JpegUrl = i.OriginalUrl;
                 
                 //600×800 or 漫画 6P
@@ -271,7 +272,10 @@ namespace SitePack
                     if (i.Width == 0 && i.Height == 0)
                     {
                         //i.OriginalUrl = i.SampleUrl.Replace("600x600", "1200x1200");
+                        //i.MidUrl = i.SampleUrl.Replace("c/600x600/img-master", "img-original");
+                        //i.JpegUrl = i.MidUrl.Replace("p0_master1200", "p0");
                         i.JpegUrl = i.OriginalUrl;
+                        //i.JpegUrl = doc.DocumentNode.SelectSingleNode("//div[@class='works_display']").SelectSingleNode(".//img").Attributes["src"].Value;
                         //manga list
                         //漫画 6P
                         int index = dimension.IndexOf(' ') + 1;
@@ -281,7 +285,7 @@ namespace SitePack
                         for (int j = 0; j < mangaCount; j++)
                         {
                             //oriUrl = "http://img" + imgsvr + ".pixiv.net/img/" + items[6].Split('/')[4] + "/" + id + "_p0." + ext;
-                            img.OrignalUrlList.Add(i.OriginalUrl.Replace("_p0", "_p" + j));
+                            img.OrignalUrlList.Add(i.JpegUrl.Replace("_p0", "_p" + j));
                         }
                     }
                 }
