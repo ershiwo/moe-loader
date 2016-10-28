@@ -12,7 +12,9 @@ namespace SitePack
     {
         public enum PixivSrcType { Tag, Author, Day, Week, Month, }
 
-        public override string SiteUrl { get { return "http://www.pixiv.net"; } }
+        //public override string SiteUrl { get { return "http://www.pixiv.net"; } }
+        //Pixiv will change its web design, there is the new website node now: http://www.pixiv.net/whitecube/. The internal account need it.
+        public override string SiteUrl { get { return "http://www.pixiv.net/whitecube/"; } }
         public override string SiteName
         {
             get
@@ -44,7 +46,8 @@ namespace SitePack
             }
         }
         public override string ShortName { get { return "pixiv"; } }
-        public override string Referer { get { return "http://www.pixiv.net/"; } }
+        //public override string Referer { get { return "http://www.pixiv.net/"; } }
+        public override string Referer { get { return "http://www.pixiv.net/whitecube/"; } }
 
         public override bool IsSupportCount { get { return false; } } //fixed 20
         //public override bool IsSupportScore { get { return false; } }
@@ -76,7 +79,8 @@ namespace SitePack
             Login(proxy);
 
             //http://www.pixiv.net/new_illust.php?p=2
-            string url = SiteUrl + "/new_illust.php?p=" + page;
+            //string url = SiteUrl + "/new_illust.php?p=" + page;
+            string url = SiteUrl + "/all/latest/illusts";
 
             MyWebClient web = new MyWebClient();
             web.Proxy = proxy;
@@ -86,7 +90,8 @@ namespace SitePack
             if (keyWord.Length > 0)
             {
                 //http://www.pixiv.net/search.php?s_mode=s_tag&word=hatsune&order=date_d&p=2
-                url = SiteUrl + "/search.php?s_mode=s_tag&word=" + keyWord + "&order=date_d&p=" + page;
+                //url = SiteUrl + "/search.php?s_mode=s_tag&word=" + keyWord + "&order=date_d&p=" + page;
+                url = SiteUrl + "/search/" + keyWord + "?adult_mode=include";
             }
             if (srcType == PixivSrcType.Author)
             {
@@ -300,8 +305,8 @@ namespace SitePack
             if (cookie == null)
             {
                 //System.Net.HttpWebRequest req = (System.Net.HttpWebRequest)System.Net.WebRequest.Create("https://www.secure.pixiv.net/login.php");
-                System.Net.HttpWebRequest req = (System.Net.HttpWebRequest)System.Net.WebRequest.Create("http://www.pixiv.net/login.php");
-                req.UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)";
+                System.Net.HttpWebRequest req = (System.Net.HttpWebRequest)System.Net.WebRequest.Create("https://accounts.pixiv.net/login");
+                req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0";
                 req.Proxy = proxy;
                 req.Timeout = 8000;
                 req.Method = "POST";
